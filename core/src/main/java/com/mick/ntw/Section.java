@@ -2,12 +2,15 @@ package com.mick.ntw;
 
 import java.util.Objects;
 
-public class WordedNumber {
+/**
+ * This class represents a 'section' of a number.
+ */
+public class Section {
     private final int value;
     private final String word;
     private final Multiplier multiplier;
 
-    public WordedNumber(Builder builder) {
+    public Section(Builder builder) {
         this.value = builder.value;
         this.word = builder.word;
         this.multiplier = builder.multiplier;
@@ -34,23 +37,27 @@ public class WordedNumber {
         private String word;
         private Multiplier multiplier;
 
-        public Builder value(final int value){
+        public Builder value(int value){
             this.value = value;
             return this;
         }
 
-        public Builder word(final String word) {
+        public Builder word(String word) {
             this.word = word;
             return this;
         }
 
-        public Builder multiplier(final Multiplier multiplier){
+        public Builder multiplier(Multiplier multiplier){
             this.multiplier = multiplier;
             return this;
         }
 
-        public WordedNumber build(){
-            return new WordedNumber(this);
+        public Section build(){
+            if(value == null || word == null || multiplier == null){
+                throw new IllegalArgumentException("value, word and multiplier must all be set");
+            }
+
+            return new Section(this);
         }
     }
 
@@ -58,7 +65,7 @@ public class WordedNumber {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        WordedNumber that = (WordedNumber) o;
+        Section that = (Section) o;
         return value == that.value &&
                 Objects.equals(word, that.word) &&
                 multiplier == that.multiplier;

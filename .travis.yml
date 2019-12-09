@@ -1,0 +1,9 @@
+language: java
+
+services:
+  - docker
+
+jdk:
+  - openjdk8
+
+script: mvn clean verify

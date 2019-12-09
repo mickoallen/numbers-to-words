@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Here is where the actual conversion of numbers to words takes place.
+ * This class converts numbers less than 1000 into their English equivalents.
+ */
 public class IntegerToWordConverter {
     private static final Map<Integer, String> NUMBER_DEFINITIONS;
 
@@ -50,13 +54,22 @@ public class IntegerToWordConverter {
         NUMBER_DEFINITIONS = Collections.unmodifiableMap(numberDefinitions);
     }
 
-    private final boolean hypthenateComposites;
+    private final boolean hyphenateComposites;
 
-    public IntegerToWordConverter(boolean hypthenateComposites) {
-        this.hypthenateComposites = hypthenateComposites;
+    /**
+     * @param hyphenateComposites Whether to hyphenate composites, seventy three vs seventy-three
+     */
+    public IntegerToWordConverter(boolean hyphenateComposites) {
+        this.hyphenateComposites = hyphenateComposites;
     }
 
-    public String toWords(Integer value) {
+    /**
+     * Convert the given int value to words
+     * @param value int to convert
+     * @return converted int
+     * @throws IllegalArgumentException if value is greater than or equal to 1000
+     */
+    public String toWords(int value) {
         if (NUMBER_DEFINITIONS.containsKey(value)) {
             return NUMBER_DEFINITIONS.get(value);
         } else if (value >= 21 && value <= 99) {
@@ -68,16 +81,16 @@ public class IntegerToWordConverter {
         throw new IllegalArgumentException("Can only convert integers less than 1000");
     }
 
-    private String tensToWords(Integer value) {
-        Integer singles = value % 10;
+    private String tensToWords(int value) {
+        int singles = value % 10;
 
-        String joiningWord = hypthenateComposites ? JoiningWords.HYPHEN : JoiningWords.SPACE;
+        String joiningWord = hyphenateComposites ? JoiningWords.HYPHEN : JoiningWords.SPACE;
 
         return String.format("%s%s%s", toWords(value - singles), joiningWord, toWords(singles));
     }
 
-    private String hundredsToWords(Integer value) {
-        Integer tens = value % 100;
+    private String hundredsToWords(int value) {
+        int tens = value % 100;
         return String.format("%s %s %s", toWords(value - tens), JoiningWords.AND, toWords(tens));
     }
 }

@@ -1,25 +1,33 @@
 package com.mick.ntw;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.*;
 
-public class WordedNumberMapper {
+public class SectionMapper {
+    private static final Logger logger = LoggerFactory.getLogger(SectionMapper.class);
+
     private static final int SECTION_DIVISOR = 1000;
 
     private final IntegerToWordConverter toWordsConverter;
 
-    public WordedNumberMapper(final IntegerToWordConverter toWordsConverter) {
+    public SectionMapper(final IntegerToWordConverter toWordsConverter) {
         this.toWordsConverter = toWordsConverter;
     }
 
-    public List<WordedNumber> mapFromNumber(final Integer number) {
-        Stack<Integer> sections = divideIntoSections(number);
-        return mapSectionsToWordedNumbers(sections);
+    public List<Section> mapFromNumber(int value) {
+        logger.trace("Dividing {} into sections", value);
+        List<Integer> sections = splitIntoParts(value);
+
+        logger.trace("Sections: {}", sections);
+        return mapPartsToSections(sections);
     }
 
-    private Stack<Integer> divideIntoSections(Integer number){
-        Stack<Integer> sections = new Stack<>();
+    private List<Integer> splitIntoParts(int value) {
+        List<Integer> sections = new ArrayList<>();
 
-        int workingNumber = number;
+        int workingNumber = value;
         while (workingNumber > 0) {
             sections.add(workingNumber % SECTION_DIVISOR);
             workingNumber = workingNumber / SECTION_DIVISOR;
@@ -28,19 +36,20 @@ public class WordedNumberMapper {
         return sections;
     }
 
-    private List<WordedNumber> mapSectionsToWordedNumbers(Stack<Integer> sections) {
-        List<WordedNumber> wordedNumbers = new ArrayList<>();
+    private List<Section> mapPartsToSections(final List<Integer> sections) {
+        List<Section> wordedNumbers = new ArrayList<>();
 
         Iterator<Integer> sectionsIterator = sections.iterator();
         Iterator<Multiplier> multipliersIterator = EnumSet.allOf(Multiplier.class).iterator();
 
         while (sectionsIterator.hasNext()) {
-            Integer currentSection = sectionsIterator.next();
+            int currentSection = sectionsIterator.next();
             Multiplier currentMultiplier = multipliersIterator.next();
+            logger.trace("Section: {} being mapped to multiplier: {}", currentMultiplier, currentMultiplier);
 
             if (currentSection > 0) {
                 wordedNumbers.add(
-                        WordedNumber
+                        Section
                                 .builder()
                                 .multiplier(currentMultiplier)
                                 .value(currentSection)
