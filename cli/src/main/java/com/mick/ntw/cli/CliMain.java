@@ -21,17 +21,17 @@ public class CliMain {
         logger.trace("Initializing scanner");
         Scanner scanner = new Scanner(System.in);
 
-        boolean hyphenateCompsites = doHyphenateComposites(args);
-        logger.trace("{} set to {}", HYPHENATE_COMPOSITES_SWITCH, hyphenateCompsites);
+        boolean hyphenateComposites = doHyphenateComposites(args);
+        logger.trace("{} set to {}", HYPHENATE_COMPOSITES_SWITCH, hyphenateComposites);
 
         logger.info("Enter a number (or type 'exit' to exit):");
-        NumbersToWordsConverter numbersToWordsConverter = NumbersToWordsConverterFactory.create(hyphenateCompsites);
+        NumbersToWordsConverter numbersToWordsConverter = NumbersToWordsConverterFactory.create(hyphenateComposites);
 
         logger.trace("Start REP loop");
         while (true) {
             logger.info("\n");
             String input = scanner.nextLine();
-            logger.trace("Recieved input: {}", input);
+            logger.trace("Received input: {}", input);
 
             if (EXIT_CODE.equals(input)) {
                 break;

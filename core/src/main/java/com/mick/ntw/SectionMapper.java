@@ -5,9 +5,19 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+/**
+ * This maps a single int into a list of {@link Section} objects.
+ * This is achieved by breaking the int into groups of three (hundreds).
+ *
+ * eg. 1 234 567 becomes [567, 342, 1]
+ * Reverse order since using modulo to get remainder.
+ *
+ * Each of these groups can then be mapped to English words and a multiplier (thousand, million, billion)
+ * attributed to each, then reversed back to proper order for reading.
+ */
 public class SectionMapper {
     private static final Logger logger = LoggerFactory.getLogger(SectionMapper.class);
-
+    // 10^(section size: 3)
     private static final int SECTION_DIVISOR = 1000;
 
     private final IntegerToWordConverter toWordsConverter;
@@ -16,51 +26,66 @@ public class SectionMapper {
         this.toWordsConverter = toWordsConverter;
     }
 
+    /**
+     * Map the given number into a list of {@link Section} objects.
+     *
+     * @param value number to map
+     * @return mapped list of {@link Section} objects.
+     */
     public List<Section> mapFromNumber(int value) {
-        logger.trace("Dividing {} into sections", value);
-        List<Integer> sections = splitIntoParts(value);
+        logger.trace("Dividing {} into groups of three", value);
+        List<Integer> groups = splitIntoHundreds(value);
 
-        logger.trace("Sections: {}", sections);
-        return mapPartsToSections(sections);
+        logger.trace("Number groups: {}", groups);
+        return mapHundredsToSections(groups);
     }
 
-    private List<Integer> splitIntoParts(int value) {
-        List<Integer> sections = new ArrayList<>();
 
-        int workingNumber = value;
-        while (workingNumber > 0) {
-            sections.add(workingNumber % SECTION_DIVISOR);
-            workingNumber = workingNumber / SECTION_DIVISOR;
+    private List<Integer> splitIntoHundreds(int value) {
+        List<Integer> hundreds = new ArrayList<>();
+
+        while (value > 0) {
+            hundreds.add(value % SECTION_DIVISOR);
+            value = value / SECTION_DIVISOR;
         }
 
-        return sections;
+        return hundreds;
     }
 
-    private List<Section> mapPartsToSections(final List<Integer> sections) {
-        List<Section> wordedNumbers = new ArrayList<>();
+    /**
+     * Maps each set of hundreds to a {@link Section}.
+     *
+     * @param hundreds list of hundreds to map
+     * @return list of mapped {@link Section}
+     */
+    private List<Section> mapHundredsToSections(final List<Integer> hundreds) {
+        List<Section> sections = new ArrayList<>();
 
-        Iterator<Integer> sectionsIterator = sections.iterator();
+        Iterator<Integer> hundredsIterator = hundreds.iterator();
+        //enum sets are ordered based on the declaration order of the enums
         Iterator<Multiplier> multipliersIterator = EnumSet.allOf(Multiplier.class).iterator();
 
-        while (sectionsIterator.hasNext()) {
-            int currentSection = sectionsIterator.next();
+        //loop over each hundred AND each multiplier at the same time
+        while (hundredsIterator.hasNext()) {
+            int currentHundred = hundredsIterator.next();
             Multiplier currentMultiplier = multipliersIterator.next();
-            logger.trace("Section: {} being mapped to multiplier: {}", currentMultiplier, currentMultiplier);
+            logger.trace("Group: {} being mapped to multiplier: {}", currentMultiplier, currentMultiplier);
 
-            if (currentSection > 0) {
-                wordedNumbers.add(
+            if (currentHundred > 0) {
+                sections.add(
                         Section
                                 .builder()
                                 .multiplier(currentMultiplier)
-                                .value(currentSection)
-                                .word(toWordsConverter.toWords(currentSection))
+                                .value(currentHundred)
+                                .word(toWordsConverter.toWords(currentHundred))
                                 .build()
                 );
             }
         }
 
-        Collections.reverse(wordedNumbers);
+        //re-order the hundreds from left-to-right
+        Collections.reverse(sections);
 
-        return wordedNumbers;
+        return sections;
     }
 }

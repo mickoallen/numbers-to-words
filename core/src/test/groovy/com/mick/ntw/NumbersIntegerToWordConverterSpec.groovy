@@ -2,11 +2,16 @@ package com.mick.ntw
 
 import spock.lang.Specification
 
+/**
+ * This covers the main business logic front to back.
+ */
 class NumbersIntegerToWordConverterSpec extends Specification {
     private NumbersToWordsConverter numbersToWordsConverter
+    private NumbersToWordsConverter numbersToWordsConverterHyphenated
 
     def setup() {
         numbersToWordsConverter = NumbersToWordsConverterFactory.create()
+        numbersToWordsConverterHyphenated = NumbersToWordsConverterFactory.create(true)
     }
 
     def "test positive whole number conversion"() {
@@ -48,5 +53,16 @@ class NumbersIntegerToWordConverterSpec extends Specification {
         -5237             | "Negative five thousand two hundred and thirty seven"
         -1000000000       | "Negative one billion"
 //        Integer.MIN_VALUE | "todo"
+    }
+
+    def "test factory correctly makes a composite hyphenating converter"() {
+        expect:
+        numbersToWordsConverterHyphenated.convert(number) == word
+
+        where:
+        number            | word
+        85                | "Eighty-five"
+        2025              | "Two thousand and twenty-five"
+        Integer.MAX_VALUE | "Two billion one hundred and forty-seven million four hundred and eighty-three thousand six hundred and forty-seven"
     }
 }

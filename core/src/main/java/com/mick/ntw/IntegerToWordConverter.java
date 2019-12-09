@@ -1,5 +1,8 @@
 package com.mick.ntw;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,8 +12,10 @@ import java.util.Map;
  * This class converts numbers less than 1000 into their English equivalents.
  */
 public class IntegerToWordConverter {
+    private static final Logger logger = LoggerFactory.getLogger(IntegerToWordConverter.class);
     private static final Map<Integer, String> NUMBER_DEFINITIONS;
 
+    // Initialize number to word mappings
     static {
         Map<Integer, String> numberDefinitions = new HashMap<>();
         numberDefinitions.put(0, "zero");
@@ -60,25 +65,39 @@ public class IntegerToWordConverter {
      * @param hyphenateComposites Whether to hyphenate composites, seventy three vs seventy-three
      */
     public IntegerToWordConverter(boolean hyphenateComposites) {
+        logger.trace("hyphenateComposites set to {}", hyphenateComposites);
         this.hyphenateComposites = hyphenateComposites;
     }
 
     /**
      * Convert the given int value to words
+     *
      * @param value int to convert
      * @return converted int
      * @throws IllegalArgumentException if value is greater than or equal to 1000
      */
     public String toWords(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("Only positive numbers can be converted");
+        }
+
+        logger.trace("Converting integer {} to words", value);
         if (NUMBER_DEFINITIONS.containsKey(value)) {
+            if (logger.isTraceEnabled()) {
+                logger.trace("number definition defined: {}", NUMBER_DEFINITIONS.get(value));
+            }
             return NUMBER_DEFINITIONS.get(value);
-        } else if (value >= 21 && value <= 99) {
+        } else if (isNumberInTheTens(value)) {
             return tensToWords(value);
-        } else if (value >= 101 && value <= 999) {
+        } else if (isNumberInTheHundreds(value)) {
             return hundredsToWords(value);
         }
 
         throw new IllegalArgumentException("Can only convert integers less than 1000");
+    }
+
+    private boolean isNumberInTheTens(int value) {
+        return value >= 21 && value <= 99;
     }
 
     private String tensToWords(int value) {
@@ -87,6 +106,10 @@ public class IntegerToWordConverter {
         String joiningWord = hyphenateComposites ? JoiningWords.HYPHEN : JoiningWords.SPACE;
 
         return String.format("%s%s%s", toWords(value - singles), joiningWord, toWords(singles));
+    }
+
+    private boolean isNumberInTheHundreds(int value) {
+        return value >= 101 && value <= 999;
     }
 
     private String hundredsToWords(int value) {

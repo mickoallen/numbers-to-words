@@ -52,6 +52,14 @@
                         <include>**/*Spec.java</include>
                     </includes>
                 </configuration>
+                <dependencies>
+                    <!-- Current issue in spock, need to specific this https://github.com/spockframework/spock-example/issues/30-->
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>3.0.0-M4</version>
+                    </dependency>
+                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>

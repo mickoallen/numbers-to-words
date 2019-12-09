@@ -32,6 +32,7 @@ public class NumbersToWordsConverter {
         logger.trace("Converting number: {} to words", value);
 
         if (value == 0) {
+            logger.trace("Number is zero, returning");
             return ZERO;
         }
 
@@ -39,10 +40,14 @@ public class NumbersToWordsConverter {
         String numbersAsWords = sectionJoiner.join(sections);
 
         if (isNegative(value)) {
-            numbersAsWords = String.format("%s %s", NEGATIVE, numbersAsWords);
+            logger.trace("{} is negative, treating accordingly", value);
+            numbersAsWords = String.format("%s%s%s", NEGATIVE, JoiningWords.SPACE, numbersAsWords);
         }
 
-        return capitalizeFirstLetter(numbersAsWords);
+        String wordedNumber = capitalizeFirstLetter(numbersAsWords);
+        logger.trace("Finished converting {} into {}", value, wordedNumber);
+
+        return wordedNumber;
     }
 
     private boolean isNegative(int value) {
