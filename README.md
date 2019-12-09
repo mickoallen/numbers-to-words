@@ -38,9 +38,7 @@ String numberAsWords = convert.convert(77);
 assert numberAsWords.equals("seventy-seven");
 ```
 
-
-
-#### Using the test CLI application
+### Using the test CLI application
 Build:
 ```shell
 ./mvnw clean install 
@@ -63,9 +61,9 @@ Uses Spock for unit testing, they can be run easily using:
 ## Features
 
 Converts numbers to words.
-  * Handles all numbers between Integer.MIN_VALUE and Integer.MAX_VALUE inclusively
-  * Adds 'and' in the correct places
-  * Optional hyphenations
+* Handles all numbers between Integer.MIN_VALUE and Integer.MAX_VALUE inclusively
+* Adds 'and' in the correct places
+* Optional hyphenations
 
 ## How it works
 
@@ -78,9 +76,9 @@ Each of these groups of hundreds is then mapped sections, containing it's Englis
 The final step is to combine all of the sections into a full string, adding appropriate joining words where required.
 
 ## CI
-  * Built using [Travis CI](https://travis-ci.com/mickoallen/numbers-to-words)
-  * Code coverage report by Jacoco to [Coveralls](https://coveralls.io/github/mickoallen/numbers-to-words)
-  * Code analysis by [PMD](https://pmd.github.io/) and [Codacy](https://app.codacy.com/manual/mickoallen/numbers-to-words/dashboard)
+* Built using [Travis CI](https://travis-ci.com/mickoallen/numbers-to-words)
+* Code coverage report by Jacoco to [Coveralls](https://coveralls.io/github/mickoallen/numbers-to-words)
+* Code analysis by [PMD](https://pmd.github.io/) and [Codacy](https://app.codacy.com/manual/mickoallen/numbers-to-words/dashboard)
 
 ## Contributing
 
