@@ -45,12 +45,23 @@ class DefaultSectionCreator implements SectionCreator {
         List<Integer> hundreds = new ArrayList<>();
         int workingValue = value;
 
-        while (workingValue > 0) {
-            hundreds.add(workingValue % SECTION_DIVISOR);
+        while (workingValue != 0) {
+            hundreds.add(getPositiveHundreds(workingValue));
             workingValue = workingValue / SECTION_DIVISOR;
         }
 
         return hundreds;
+    }
+
+    /**
+     * Since this will always be > Integer.MIN_VALUE we can safely get the absolute value, simplifying the
+     * rest of the conversion as it will only be with positive numbers.
+     *
+     * @param value int value to get the positive hundreds from
+     * @return the positive hundreds
+     */
+    private int getPositiveHundreds(int value){
+        return Math.abs(value % SECTION_DIVISOR);
     }
 
     /**

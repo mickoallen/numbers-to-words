@@ -36,12 +36,12 @@ public class NumbersToWordsConverter {
             return ZERO;
         }
 
-        List<Section> sections = sectionCreator.mapFromNumber(Math.abs(value));
+        List<Section> sections = sectionCreator.mapFromNumber(value);
         String numbersAsWords = sectionJoiner.join(sections);
 
         if (isNegative(value)) {
             logger.trace("{} is negative, treating accordingly", value);
-            numbersAsWords = String.format("%s%s%s", NEGATIVE, JoiningWords.SPACE, numbersAsWords);
+            numbersAsWords = NEGATIVE + JoiningWords.SPACE + numbersAsWords;
         }
 
         String wordedNumber = capitalizeFirstLetter(numbersAsWords);
