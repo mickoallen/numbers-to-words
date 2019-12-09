@@ -2,13 +2,13 @@ package com.mick.ntw
 
 import spock.lang.Specification
 
-class IntegerToWordConverterSpec extends Specification {
-    IntegerToWordConverter integerToWordConverter
-    IntegerToWordConverter integerToWordConverterHyphenated
+class WordMapperSpec extends Specification {
+    WordMapper integerToWordConverter
+    WordMapper integerToWordConverterHyphenated
 
     def setup() {
-        integerToWordConverter = new IntegerToWordConverter(false)
-        integerToWordConverterHyphenated = new IntegerToWordConverter(true)
+        integerToWordConverter = new WordMapper(false)
+        integerToWordConverterHyphenated = new WordMapper(true)
     }
 
     def "negative number conversion causes exception"() {

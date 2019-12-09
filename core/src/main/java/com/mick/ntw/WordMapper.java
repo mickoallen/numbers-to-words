@@ -11,8 +11,8 @@ import java.util.Map;
  * Here is where the actual conversion of numbers to words takes place.
  * This class converts numbers less than 1000 into their English equivalents.
  */
-public class IntegerToWordConverter {
-    private static final Logger logger = LoggerFactory.getLogger(IntegerToWordConverter.class);
+class WordMapper {
+    private static final Logger logger = LoggerFactory.getLogger(WordMapper.class);
     private static final Map<Integer, String> NUMBER_DEFINITIONS;
 
     // Initialize number to word mappings
@@ -64,7 +64,7 @@ public class IntegerToWordConverter {
     /**
      * @param hyphenateComposites Whether to hyphenate composites, seventy three vs seventy-three
      */
-    public IntegerToWordConverter(boolean hyphenateComposites) {
+    public WordMapper(boolean hyphenateComposites) {
         logger.trace("hyphenateComposites set to {}", hyphenateComposites);
         this.hyphenateComposites = hyphenateComposites;
     }

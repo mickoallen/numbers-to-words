@@ -5,7 +5,7 @@ import spock.lang.Specification
 /**
  * This covers the main business logic front to back.
  */
-class NumbersIntegerToWordConverterSpec extends Specification {
+class NumbersWordMapperSpec extends Specification {
     private NumbersToWordsConverter numbersToWordsConverter
     private NumbersToWordsConverter numbersToWordsConverterHyphenated
 

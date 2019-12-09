@@ -8,5 +8,6 @@ public class JoiningWords {
     public static final String HYPHEN = "-";
     public static final String SPACE = " ";
 
-    private JoiningWords(){}
+    private JoiningWords() {
+    }
 }

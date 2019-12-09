@@ -3,7 +3,7 @@ package com.mick.ntw;
 /**
  * This class represents a 'section' of a number.
  */
-public class Section {
+class Section {
     private final int value;
     private final String word;
     private final Multiplier multiplier;

@@ -67,6 +67,20 @@ Converts numbers to words.
 * Adds 'and' in the correct places
 * Optional hyphenations
 
+## How it works
+
+The input number is broken up into groups of hundreds.
+123
+
+
+* This is achieved by breaking the int into groups of three (hundreds).
+ *
+ * eg. 1 234 567 becomes [567, 342, 1]
+ * Reverse order since using modulo to get remainder.
+ *
+ * Each of these groups can then be mapped to English words and a multiplier (thousand, million, billion)
+ * attributed to each, then reversed back to proper order for reading.
+
 ## CI
 - Built using [Travis CI](https://travis-ci.com/mickoallen/numbers-to-words)
 - Code coverage report by Jacoco to [Coveralls](https://coveralls.io/github/mickoallen/numbers-to-words)
