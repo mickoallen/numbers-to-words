@@ -7,3 +7,6 @@ jdk:
   - openjdk8
 
 script: mvn clean verify
+
+after_success:
+  - mvn -pl core clean jacoco:prepare-agent test jacoco:report coveralls:report
