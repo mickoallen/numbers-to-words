@@ -70,16 +70,14 @@ Converts numbers to words.
 ## How it works
 
 The input number is broken up into groups of hundreds.
-123
+
+example: ```1234567 -> [1, 234, 567]```
+
+Each of these groups of hundreds is then mapped sections, containing it's English equivalent and assigned a multiplier value (thousand, million, billion).
+
+The final step is to combine all of the sections into a full string, adding appropriate joining words where required.
 
 
-* This is achieved by breaking the int into groups of three (hundreds).
- *
- * eg. 1 234 567 becomes [567, 342, 1]
- * Reverse order since using modulo to get remainder.
- *
- * Each of these groups can then be mapped to English words and a multiplier (thousand, million, billion)
- * attributed to each, then reversed back to proper order for reading.
 
 ## CI
 - Built using [Travis CI](https://travis-ci.com/mickoallen/numbers-to-words)

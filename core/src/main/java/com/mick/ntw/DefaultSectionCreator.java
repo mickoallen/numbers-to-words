@@ -15,14 +15,14 @@ import java.util.*;
  * Each of these groups can then be mapped to English words and a multiplier (thousand, million, billion)
  * attributed to each, then reversed back to proper order for reading.
  */
-class DefaultSectionMapper implements SectionMapper {
-    private static final Logger logger = LoggerFactory.getLogger(DefaultSectionMapper.class);
+class DefaultSectionCreator implements SectionCreator {
+    private static final Logger logger = LoggerFactory.getLogger(DefaultSectionCreator.class);
     // 10^(section size: 3)
     private static final int SECTION_DIVISOR = 1000;
 
     private final WordMapper toWordsConverter;
 
-    public DefaultSectionMapper(final WordMapper toWordsConverter) {
+    public DefaultSectionCreator(final WordMapper toWordsConverter) {
         this.toWordsConverter = toWordsConverter;
     }
 

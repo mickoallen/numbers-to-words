@@ -23,7 +23,7 @@ public class NumbersToWordsConverterFactory {
      */
     public static NumbersToWordsConverter create(boolean hyphenateConstants) {
         return new NumbersToWordsConverter(
-                new DefaultSectionMapper(
+                new DefaultSectionCreator(
                         new WordMapper(hyphenateConstants)
                 ),
                 new DefaultSectionJoiner()

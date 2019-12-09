@@ -52,7 +52,7 @@ class NumbersWordMapperSpec extends Specification {
         -85               | "Negative eighty five"
         -5237             | "Negative five thousand two hundred and thirty seven"
         -1000000000       | "Negative one billion"
-//        Integer.MIN_VALUE | "todo"
+//        Integer.MIN_VALUE | "Negative two billion one hundred and forty seven million four hundred and eighty three thousand six hundred and forty seven" - TODO - waiting on confirmation from product
     }
 
     def "test factory correctly makes a composite hyphenating converter"() {

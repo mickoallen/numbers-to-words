@@ -14,11 +14,11 @@ public class NumbersToWordsConverter {
     private static final String NEGATIVE = "negative";
     private static final String ZERO = "Zero";
 
-    private final SectionMapper sectionMapper;
+    private final SectionCreator sectionCreator;
     private final SectionJoiner sectionJoiner;
 
-    public NumbersToWordsConverter(final SectionMapper sectionMapper, final SectionJoiner sectionJoiner) {
-        this.sectionMapper = sectionMapper;
+    public NumbersToWordsConverter(final SectionCreator sectionCreator, final SectionJoiner sectionJoiner) {
+        this.sectionCreator = sectionCreator;
         this.sectionJoiner = sectionJoiner;
     }
 
@@ -36,7 +36,7 @@ public class NumbersToWordsConverter {
             return ZERO;
         }
 
-        List<Section> sections = sectionMapper.mapFromNumber(Math.abs(value));
+        List<Section> sections = sectionCreator.mapFromNumber(Math.abs(value));
         String numbersAsWords = sectionJoiner.join(sections);
 
         if (isNegative(value)) {
