@@ -43,10 +43,11 @@ class DefaultSectionCreator implements SectionCreator {
 
     private List<Integer> splitIntoHundreds(int value) {
         List<Integer> hundreds = new ArrayList<>();
+        int workingValue = value;
 
-        while (value > 0) {
-            hundreds.add(value % SECTION_DIVISOR);
-            value = value / SECTION_DIVISOR;
+        while (workingValue > 0) {
+            hundreds.add(workingValue % SECTION_DIVISOR);
+            workingValue = workingValue / SECTION_DIVISOR;
         }
 
         return hundreds;
